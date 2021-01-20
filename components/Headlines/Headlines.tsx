@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import styles from './Headlines.module.scss';
 import { country, category, articles } from '../../types/types';
+import Article from '../Article/Article';
 
 interface Props {
 
@@ -15,7 +16,7 @@ const  Headlines: React.FC<Props> = () => {
   const [categoryArr, setCategoryArr] = useState<null | sourceTypes>(null);
   const [sourceFilter, setSourceFilter] = useState<null | string>(null);
   const [searchTermFilter, setSearchTermFilter] = useState<null | string>(null);
-  const [articleArr, setArticleArr] = useState<articles[] | null>();
+  const [articleArr, setArticleArr] = useState<articles | null>();
 
   // useEffect(() => {
   //   // fetch available sources
@@ -46,9 +47,11 @@ const  Headlines: React.FC<Props> = () => {
   }, [countryFilter, categoryFilter, sourceFilter, searchTermFilter]);
   
   return (
-    <pre>
-      {JSON.stringify(articleArr, null, 2)}
-    </pre>
+    <div className={styles.headlines}>
+      {articleArr?.map((item) => (
+        <Article article={item} />
+      ))}
+    </div>
   );
 };
 

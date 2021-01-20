@@ -1,0 +1,7 @@
+.headlines {
+  padding: 2rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(18.8125rem, 1fr));
+  grid-auto-rows: minmax(15rem, auto);
+  gap: 2rem;
+}

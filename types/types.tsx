@@ -63,7 +63,9 @@ export type country =
   | 've'
   | 'za';
 
-  export type articles = {
+  export type articles = article[]
+
+  export type article = {
     source: {
       id: string;
       name: string;
@@ -75,4 +77,4 @@ export type country =
     urlToImage: string;
     publishedAt: string;
     content: string;
-  }[]
+  }
