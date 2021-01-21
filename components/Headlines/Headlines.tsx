@@ -12,7 +12,7 @@ type sourceTypes = string[];
 
 const Headlines: React.FC<Props> = () => {
   const [countryFilter, setCountryFilter] = useState<country>('us');
-  const [categoryFilter, setCategoryFilter] = useState<undefined | category>(undefined);
+  const [categoryFilter, setCategoryFilter] = useState<category>('general');
   const [categoryArr, setCategoryArr] = useState<null | sourceTypes>(null);
   const [sourceFilter, setSourceFilter] = useState<null | string>(null);
   const [searchTermFilter, setSearchTermFilter] = useState<null | string>(null);

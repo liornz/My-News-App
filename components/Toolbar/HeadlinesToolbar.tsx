@@ -10,7 +10,7 @@ import styles from './HeadlinesToolbar.module.scss';
 interface Props {
   countryFilter: country;
   changeCountry: (code: country) => void;
-  categoryFilter: category | undefined;
+  categoryFilter: category;
   changeCategory: (cat: category) => void;
 }
 
@@ -38,7 +38,6 @@ const Toolbar: React.FC<Props> = (props) => {
           value={categoryFilter}
           onChange={categoryChangeHandler}
         >
-          <option value=''>All Categories</option>
           {categoryArr.map((item) => (
             <option key={item} value={item}>
               {categoryNames[item]}
