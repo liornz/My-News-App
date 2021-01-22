@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
   countryArr,
   countryNames,
@@ -8,14 +9,24 @@ import { category, country } from '../../types/types';
 import styles from './HeadlinesToolbar.module.scss';
 
 interface Props {
-  countryFilter: country;
+  countryFilter: country | undefined;
   changeCountry: (code: country) => void;
   categoryFilter: category;
   changeCategory: (cat: category) => void;
+  searchTermFilter: string;
+  changeSearchTerm: (term: string) => void;
 }
 
 const Toolbar: React.FC<Props> = (props) => {
-  const { countryFilter, changeCountry, categoryFilter, changeCategory } = props;
+  const [userSearchTerm, setUserSearchTerm] = useState('');
+  const {
+    countryFilter,
+    changeCountry,
+    categoryFilter,
+    changeCategory,
+    searchTermFilter,
+    changeSearchTerm,
+  } = props;
 
   const countryChangeHandler = (
     event: React.ChangeEvent<HTMLSelectElement>
@@ -23,14 +34,29 @@ const Toolbar: React.FC<Props> = (props) => {
     changeCountry(event.target.value as country);
   };
 
-  const categoryChangeHandler = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  const categoryChangeHandler = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
     changeCategory(event.target.value as category);
+  };
+
+  const searchTermChangeHandler = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setUserSearchTerm(event.target.value);
+    changeSearchTerm(event.target.value);
   };
 
   return (
     <div className={styles.toolbar}>
       <div>Logo</div>
       <div className={styles.filter}>
+        <input
+          type="text"
+          placeholder="Search..."
+          value={userSearchTerm}
+          onChange={searchTermChangeHandler}
+        />
         <label htmlFor="category">Category</label>
         <select
           name="category"
@@ -50,6 +76,7 @@ const Toolbar: React.FC<Props> = (props) => {
           value={countryFilter}
           onChange={countryChangeHandler}
         >
+          <option value={''}>All Countries</option>
           {countryArr.map((item) => (
             <option key={item} value={item}>
               {countryNames[item]}

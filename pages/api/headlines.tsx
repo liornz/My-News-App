@@ -20,7 +20,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   const country = req.body.country || '';
   const category = req.body.category || '';
   const source = req.body.source || '';
-  const searchTerm = req.body.searchTerm || '';
+  const searchTerm = req.body.searchTerm;
 
   try {
     const headlinesUrl = `

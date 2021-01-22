@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { debounce } from 'lodash';
 import styles from './Headlines.module.scss';
 import { country, category, articles } from '../../types/types';
 import { countryNames } from '../../types/constants';
@@ -11,12 +12,12 @@ interface Props {}
 type sourceTypes = string[];
 
 const Headlines: React.FC<Props> = () => {
-  const [countryFilter, setCountryFilter] = useState<country>('us');
+  const [countryFilter, setCountryFilter] = useState<country | undefined>(undefined);
   const [categoryFilter, setCategoryFilter] = useState<category>('general');
-  const [categoryArr, setCategoryArr] = useState<null | sourceTypes>(null);
+  const [categoriesArray, setCategoriesArray] = useState<null | sourceTypes>(null);
   const [sourceFilter, setSourceFilter] = useState<null | string>(null);
-  const [searchTermFilter, setSearchTermFilter] = useState<null | string>(null);
-  const [articleArr, setArticleArr] = useState<articles | null>();
+  const [searchTermFilter, setSearchTermFilter] = useState<string>('');
+  const [articleArray, setArticleArray] = useState<articles | null>();
 
   const countryFilterChangeHandler = (countryCode: country) => {
     setCountryFilter(countryCode);
@@ -26,6 +27,10 @@ const Headlines: React.FC<Props> = () => {
     setCategoryFilter(cat);
   }
 
+  const searchTermFilterChangeHandler = debounce((term: string) => {
+    setSearchTermFilter(term);
+  }, 300);
+
   // useEffect(() => {
   //   // fetch available sources
   //   // setCagegoryArr()
@@ -33,10 +38,10 @@ const Headlines: React.FC<Props> = () => {
 
   useEffect(() => {
     const data = {
-      country: countryFilter,
+      country: countryFilter || '',
       category: categoryFilter,
       source: sourceFilter,
-      serachTerm: searchTermFilter,
+      searchTerm: searchTermFilter,
     };
     axios({
       method: 'post',
@@ -48,7 +53,7 @@ const Headlines: React.FC<Props> = () => {
     })
       .then((res) => {
         if (res.status === 200) {
-          setArticleArr(res.data);
+          setArticleArray(res.data);
         }
       })
       .catch((error) => {
@@ -63,12 +68,15 @@ const Headlines: React.FC<Props> = () => {
         changeCountry={countryFilterChangeHandler}
         categoryFilter={categoryFilter}
         changeCategory={categoryFilterChangeHandler}
+        searchTermFilter={searchTermFilter}
+        changeSearchTerm={searchTermFilterChangeHandler}
       />
       <h1 className={styles.heading}>
-        Headlines from {countryNames[countryFilter]}
+        Headlines from{' '}
+        {!countryFilter ? 'All Countries' : countryNames[countryFilter]}
       </h1>
       <div className={styles.headlines}>
-        {articleArr?.map((item) => (
+        {articleArray?.map((item) => (
           <Article article={item} />
         ))}
       </div>
