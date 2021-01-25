@@ -1,12 +1,25 @@
 .heading {
-  margin: 4rem;
+  margin: 0;
+  padding-top: 8rem;
   text-align: center;
+  background-color: rgb(235, 235, 235);
+  @media (min-width: 900px) {
+    padding-top: 4rem;
+  }
 }
 
 .headlines {
   padding: 2rem;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(25rem, 1fr));
-  grid-auto-rows: minmax(36rem, auto);
+  grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+  grid-auto-rows: minmax(33rem, auto);
   gap: 2rem;
+  background-color:rgb(235, 235, 235);
+}
+
+.epmty_headlines {
+  display: flex;
+  height: 60vh;
+  justify-content: center;
+  align-items: center;
 }

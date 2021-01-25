@@ -7,6 +7,7 @@ import {
 } from '../../types/constants';
 import { category, country } from '../../types/types';
 import styles from './HeadlinesToolbar.module.scss';
+import { IoIosRefresh } from 'react-icons/io';
 
 interface Props {
   countryFilter: country | undefined;
@@ -15,6 +16,7 @@ interface Props {
   changeCategory: (cat: category) => void;
   searchTermFilter: string;
   changeSearchTerm: (term: string) => void;
+  reloadHeadlines: () => void;
 }
 
 const Toolbar: React.FC<Props> = (props) => {
@@ -24,8 +26,8 @@ const Toolbar: React.FC<Props> = (props) => {
     changeCountry,
     categoryFilter,
     changeCategory,
-    searchTermFilter,
     changeSearchTerm,
+    reloadHeadlines
   } = props;
 
   const countryChangeHandler = (
@@ -33,13 +35,11 @@ const Toolbar: React.FC<Props> = (props) => {
   ) => {
     changeCountry(event.target.value as country);
   };
-
   const categoryChangeHandler = (
     event: React.ChangeEvent<HTMLSelectElement>
   ) => {
     changeCategory(event.target.value as category);
   };
-
   const searchTermChangeHandler = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -57,7 +57,7 @@ const Toolbar: React.FC<Props> = (props) => {
           value={userSearchTerm}
           onChange={searchTermChangeHandler}
         />
-        <label htmlFor="category">Category</label>
+        {/* <label htmlFor="category">Category</label> */}
         <select
           name="category"
           id="category-filter"
@@ -83,6 +83,9 @@ const Toolbar: React.FC<Props> = (props) => {
             </option>
           ))}
         </select>
+        <button onClick={reloadHeadlines}>
+          <IoIosRefresh />
+        </button>
       </div>
     </div>
   );

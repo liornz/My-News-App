@@ -1,12 +1,39 @@
-.article {
-  padding: 1rem;
-  border: 0.0625rem solid rgb(150, 150, 150);
+.article,
+.blank_article {
+  padding: 0;
+  border: 0.0625rem solid rgb(201, 201, 201);
   box-shadow: 0.3125rem 0.3125rem 0.3125rem #ccc;
   text-align: justify;
-  overflow: auto;
+  overflow: hidden;
+  background-color: white;
+  border-radius: 10px;
+  img {
+    width: 100%;
+    height: 13rem;
+  }
+  h3,
+  p {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  p {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+  }
 }
 
 .article_image {
   height: 50%;
   background-size: cover;
+}
+
+.blank_article h3,
+.blank_article p {
+  background-color: lightgray;
+  color: lightgray;
+}
+
+.blank_image {
+  height: 50%;
+  background-color: lightgray;
 }

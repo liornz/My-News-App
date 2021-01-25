@@ -17,10 +17,11 @@ interface headlinesResponseError {
 type headlinesResponse = headlinesResponseOK | headlinesResponseError;
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-  const country = req.body.country || '';
-  const category = req.body.category || '';
-  const source = req.body.source || '';
-  const searchTerm = req.body.searchTerm;
+  const country: string = req.body.country || '';
+  const category: string = req.body.category || '';
+  const source: string = req.body.source || '';
+  const searchTerm: string = req.body.searchTerm;
+  const pageSize: number = req.body.pageSize;
 
   try {
     const headlinesUrl = `
@@ -28,7 +29,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     country
   )}&category=${encodeURI(category)}&source=${encodeURI(source)}&q=${encodeURI(
       searchTerm
-    )}&apiKey=${process.env.NEWS_API}`;
+    )}&pageSize=${pageSize}&apiKey=${process.env.NEWS_API}`;
     console.log(headlinesUrl);
     const response = await axios.get<headlinesResponse>(headlinesUrl);
     if (response.data.status === 'ok') {
