@@ -63,18 +63,36 @@ export type country =
   | 've'
   | 'za';
 
-  export type articles = article[]
+export type language =
+  | 'ar'
+  | 'de'
+  | 'en'
+  | 'es'
+  | 'fr'
+  | 'he'
+  | 'it'
+  | 'nl'
+  | 'no'
+  | 'pt'
+  | 'ru'
+  | 'se'
+  | 'ud'
+  | 'zh';
 
-  export type article = {
-    source: {
-      id: string;
-      name: string;
-    };
-    author: string;
-    title: string;
-    description: string;
-    url: string;
-    urlToImage: string;
-    publishedAt: string;
-    content: string;
-  }
+export type articles = article[];
+
+export type article = {
+  source: {
+    id: string;
+    name: string;
+  };
+  author: string;
+  title: string;
+  description: string;
+  url: string;
+  urlToImage: string;
+  publishedAt: string;
+  content: string;
+};
+
+export type sortBy = 'relevancy' | 'popularity' | 'publishedAt'; 

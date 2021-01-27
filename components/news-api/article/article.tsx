@@ -1,6 +1,6 @@
 import Image from 'next/image';
-import { article } from '../../types/types';
-import styles from './Article.module.scss';
+import { article } from '../../../types/types';
+import styles from './article.module.scss';
 
 interface Props {
   article: article | undefined;
@@ -8,19 +8,20 @@ interface Props {
 
 const Article: React.FC<Props> = (props) => {
   const { article } = props;
+
+  const image = () => {
+    if (article?.urlToImage === null) {
+      return <div className={styles.blank_image}>NO IMAGE</div>;
+    } else return <img src={article?.urlToImage!} alt="Article Image" />;
+  };
+
   const articleCard = (
     <div className={styles.article}>
       <a href={article?.url}>
-        {/* <div
-          className={styles.article_image}
-          // style={{ backgroundImage: `url(${article?.urlToImage})` }}
-        > */}
-          <img src={article?.urlToImage!} alt='Article Image'/>
-        {/* </div> */}
+        {image()}
         <h3>{article?.title}</h3>
       </a>
       <p>Source: {article?.source.name}</p>
-      <p>Author: {article?.author}</p>
       <p>{article?.description}</p>
     </div>
   );
@@ -28,7 +29,6 @@ const Article: React.FC<Props> = (props) => {
     <div className={styles.blank_article}>
       <div className={styles.blank_image}></div>
       <h3>XXXXXXXXX XXXXXXXX XXXXX XXXX</h3>
-      <p>XXXXX XXXXX XXXXX XXXXX</p>
       <p>XXXXX XXXXX XXXXX XXXXX</p>
       <p>
         XXXXX XXXXX XXXXX XXXXX XXXXX XXXXX XXXXX XXXXX XXXXX XXXXX XXXXX XXXXX

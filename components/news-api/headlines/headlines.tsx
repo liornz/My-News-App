@@ -1,25 +1,22 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { debounce } from 'lodash';
-import styles from './Headlines.module.scss';
-import { country, category, articles } from '../../types/types';
-import { countryNames } from '../../types/constants';
-import Article from '../Article/Article';
-import Toolbar from '../Toolbar/HeadlinesToolbar';
+import styles from './headlines.module.scss';
+import { country, category, articles } from '../../../types/types';
+import { countryNames } from '../../../types/constants';
+import Article from '../article/article';
+import Toolbar from './headlines-toolbar';
 
 interface Props {}
-
-type sourceTypes = string[];
 
 const Headlines: React.FC<Props> = () => {
   const [countryFilter, setCountryFilter] = useState<country | undefined>(
     undefined
   );
   const [categoryFilter, setCategoryFilter] = useState<category>('general');
-  // const [categoriesArray, setCategoriesArray] = useState<null | sourceTypes>(null);
-  const [sourceFilter, setSourceFilter] = useState<null | string>(null);
+  const [sourceFilter, setSourceFilter] = useState<undefined | string>(undefined);
   const [searchTermFilter, setSearchTermFilter] = useState<string>('');
-  const [articleArray, setArticleArray] = useState<articles | null>();
+  const [articleArray, setArticleArray] = useState<articles | undefined>(undefined);
   const [pageSize, setPageSize] = useState(30);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -46,15 +43,24 @@ const Headlines: React.FC<Props> = () => {
         setIsLoading(true);
         const res = await axios({
           method: 'post',
-          url: '/api/headlines',
+          url: '/api/newsapi-headlines',
           headers: {
             'Content-Type': 'application/json',
           },
           data,
         });
+        const res2 = await axios({
+          method: 'POST',
+          url: '/api/bing-news',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+        console.log(res2);
         if (res.status === 200) {
           setArticleArray(res.data);
           setIsLoading(false);
+          console.log('NEWS API DATA', res.data);
         }
       } catch (error) {
         console.log('Error retrieving news data from server!');
@@ -74,7 +80,7 @@ const Headlines: React.FC<Props> = () => {
   const articleList = (
     <div className={styles.headlines}>
       {articleArray?.map((item) => (
-        <Article article={item} />
+        <Article key={item.title} article={item} />
       ))}
     </div>
   );

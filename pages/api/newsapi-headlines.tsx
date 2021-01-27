@@ -35,9 +35,12 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     if (response.data.status === 'ok') {
       res.status(200).send(response.data.articles);
     } else if (response.data.status === 'error') {
-      res.status(401).send({code: response.data.code, message: response.data.message})
+      res
+        .status(401)
+        .send({ code: response.data.code, message: response.data.message });
     }
   } catch (error) {
     res.status(402);
   }
 };
+
