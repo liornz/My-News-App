@@ -29,14 +29,14 @@ const Toolbar: React.FC<Props> = (props) => {
   return (
     <>
       <div className={styles.first_line}>
-        <div>Logo</div>
+        <div className={styles.logo}>Logo</div>
         <div className={styles.filter}>
-          <Search changeSearchTerm={changeSearchTerm} />
           <CountryFilter
             countryFilter={countryFilter}
             changeCountry={changeCountry}
             countryList={countryList}
           />
+          <Search changeSearchTerm={changeSearchTerm} />
           <Refresh reloadData={reloadData} />
         </div>
       </div>

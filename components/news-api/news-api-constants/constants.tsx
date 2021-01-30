@@ -70,7 +70,7 @@ export const countryList = [
   'Thailand',
   'Turkey',
   'Ukraine',
-  'United Arab Emirates',
+  'UAE',
   'United States',
   'Venezuela',
 ];
