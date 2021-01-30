@@ -1,0 +1,13 @@
+  .button {
+    margin: 0 1rem;
+    background-color: rgb(7, 107, 165);
+    color: white;
+    font-size: 1rem;
+    font-weight: 700;
+    border: none;
+    font-size: 1.3rem;
+    cursor: pointer;
+    &:focus {
+      outline: none;
+    }
+  }

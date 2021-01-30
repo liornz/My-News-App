@@ -2,40 +2,51 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { debounce } from 'lodash';
 import styles from './headlines.module.scss';
-import { country, category, articles } from '../../../types/types';
-import { countryNames } from '../../../types/constants';
-import Article from '../article/article';
-import Toolbar from './headlines-toolbar';
+import { articles } from '../../../types/types';
+import Article from '../../article/article';
+import Toolbar from './toolbar';
+import { categoriesList, countryList, countryCode, categoryCode } from '../news-api-constants/constants';
 
 interface Props {}
 
+
+
 const Headlines: React.FC<Props> = () => {
-  const [countryFilter, setCountryFilter] = useState<country | undefined>(
+  const [countryFilter, setCountryFilter] = useState<string | undefined>(
     undefined
   );
-  const [categoryFilter, setCategoryFilter] = useState<category>('general');
-  const [sourceFilter, setSourceFilter] = useState<undefined | string>(undefined);
+  const [categoryFilter, setCategoryFilter] = useState<string>('General');
+  const [sourceFilter, setSourceFilter] = useState<undefined | string>(
+    undefined
+  );
   const [searchTermFilter, setSearchTermFilter] = useState<string>('');
-  const [articleArray, setArticleArray] = useState<articles | undefined>(undefined);
+  const [articleArray, setArticleArray] = useState<articles | undefined>(
+    undefined
+  );
   const [pageSize, setPageSize] = useState(30);
   const [isLoading, setIsLoading] = useState(true);
 
-  const countryFilterChangeHandler = (countryCode: country) => {
-    setCountryFilter(countryCode);
+  const countryFilterChangeHandler = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    setCountryFilter(event.target.value);
   };
-  const categoryFilterChangeHandler = (cat: category) => {
+  const categoryFilterChangeHandler = (cat: string) => {
     setCategoryFilter(cat);
   };
   const searchTermFilterChangeHandler = debounce((term: string) => {
     setSearchTermFilter(term);
   }, 300);
 
+  
   const getHeadlines = () => {
     const getDataFromServer = async () => {
+      const categoryApi = categoryCode[categoriesList.indexOf(categoryFilter)];
+      const countryApi = countryFilter !== undefined ? countryCode[countryList.indexOf(countryFilter)] : '';
       try {
         const data = {
-          country: countryFilter || '',
-          category: categoryFilter,
+          country: countryApi,
+          category: categoryApi,
           source: sourceFilter,
           searchTerm: searchTermFilter,
           pageSize: pageSize,
@@ -49,14 +60,6 @@ const Headlines: React.FC<Props> = () => {
           },
           data,
         });
-        const res2 = await axios({
-          method: 'POST',
-          url: '/api/bing-news',
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        });
-        console.log(res2);
         if (res.status === 200) {
           setArticleArray(res.data);
           setIsLoading(false);
@@ -80,7 +83,15 @@ const Headlines: React.FC<Props> = () => {
   const articleList = (
     <div className={styles.headlines}>
       {articleArray?.map((item) => (
-        <Article key={item.title} article={item} />
+        <Article
+          key={item.title}
+          id={item.title}
+          title={item.title}
+          description={item.description}
+          source={item.source.name}
+          url={item.url}
+          imageUrl={item.urlToImage}
+        />
       ))}
     </div>
   );
@@ -93,7 +104,14 @@ const Headlines: React.FC<Props> = () => {
 
   const loadingCard = (
     <div className={styles.headlines}>
-      <Article article={undefined} />
+      <Article
+        id={undefined}
+        title=""
+        description=""
+        source=""
+        url=""
+        imageUrl=""
+      />
     </div>
   );
 
@@ -108,17 +126,18 @@ const Headlines: React.FC<Props> = () => {
   return (
     <>
       <Toolbar
-        countryFilter={countryFilter}
-        changeCountry={countryFilterChangeHandler}
+        reloadData={getHeadlines}
         categoryFilter={categoryFilter}
         changeCategory={categoryFilterChangeHandler}
-        searchTermFilter={searchTermFilter}
+        categoriesList={categoriesList}
+        countryList={countryList}
+        changeCountry={countryFilterChangeHandler}
+        countryFilter={countryFilter}
         changeSearchTerm={searchTermFilterChangeHandler}
-        reloadHeadlines={getHeadlines}
       />
       <h1 className={styles.heading}>
         Headlines from{' '}
-        {!countryFilter ? 'All Countries' : countryNames[countryFilter]}
+        {!countryFilter ? 'All Countries' : countryFilter}
       </h1>
       {articleDisplay()}
     </>

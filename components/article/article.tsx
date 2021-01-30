@@ -1,28 +1,32 @@
 import Image from 'next/image';
-import { article } from '../../../types/types';
 import styles from './article.module.scss';
 
 interface Props {
-  article: article | undefined;
+  id: string | undefined;
+  title: string;
+  description: string;
+  source: string;
+  url: string;
+  imageUrl: string | null | undefined;
 }
 
 const Article: React.FC<Props> = (props) => {
-  const { article } = props;
+  const { id, title, description, source, url, imageUrl } = props;
 
   const image = () => {
-    if (article?.urlToImage === null) {
+    if (imageUrl === null || imageUrl === undefined) {
       return <div className={styles.blank_image}>NO IMAGE</div>;
-    } else return <img src={article?.urlToImage!} alt="Article Image" />;
+    } else return <img src={imageUrl} alt="Article Image" />;
   };
 
   const articleCard = (
     <div className={styles.article}>
-      <a href={article?.url}>
+      <a href={url}>
         {image()}
-        <h3>{article?.title}</h3>
+        <h3>{title}</h3>
       </a>
-      <p>Source: {article?.source.name}</p>
-      <p>{article?.description}</p>
+      <p>Source: {source}</p>
+      <p>{description}</p>
     </div>
   );
   const emptyCard = (
@@ -37,7 +41,7 @@ const Article: React.FC<Props> = (props) => {
   );
 
   const articleDisplay = () => {
-    if (article === undefined) {
+    if (id === undefined) {
       return emptyCard;
     } else return articleCard;
   };

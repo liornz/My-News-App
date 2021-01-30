@@ -3,7 +3,7 @@ import axios from 'axios';
 import { debounce } from 'lodash';
 import styles from './headlines.module.scss';
 import { articles, language, sortBy } from '../../../types/types';
-import Article from '../article/article';
+import Article from '../../article/article';
 import Toolbar from './everything-toolbar';
 
 interface Props {}
@@ -70,7 +70,15 @@ const Everything: React.FC<Props> = () => {
   const articleList = (
     <div className={styles.headlines}>
       {articleArray?.map((item) => (
-        <Article key={item.title} article={item} />
+        <Article
+          key={item.title}
+          id={item.title}
+          title={item.title}
+          description={item.description}
+          source={item.source.name}
+          url={item.url}
+          imageUrl={item.urlToImage}
+        />
       ))}
     </div>
   );
@@ -83,7 +91,14 @@ const Everything: React.FC<Props> = () => {
 
   const loadingCard = (
     <div className={styles.headlines}>
-      <Article article={undefined} />
+      <Article
+        id={undefined}
+        title=''
+        description=''
+        source=''
+        url=''
+        imageUrl=''
+      />
     </div>
   );
 

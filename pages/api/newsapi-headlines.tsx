@@ -30,7 +30,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   )}&category=${encodeURI(category)}&source=${encodeURI(source)}&q=${encodeURI(
       searchTerm
     )}&pageSize=${pageSize}&apiKey=${process.env.NEWS_API}`;
-    console.log(headlinesUrl);
+    // console.log(headlinesUrl);
     const response = await axios.get<headlinesResponse>(headlinesUrl);
     if (response.data.status === 'ok') {
       res.status(200).send(response.data.articles);
