@@ -1,3 +1,5 @@
+@use '../../../styles/variables';
+
 .first_line {
   padding: 1rem 0;
   display: flex;
@@ -9,4 +11,22 @@
 .filter {
   display: flex;
   justify-content: space-between;
+}
+
+.desktop {
+  display: none;
+  @media screen and (min-width: variables.$mobile-nav-size) {
+    display: block;
+  }
+}
+
+.mobile {
+  padding: 1rem 0;
+  display: flex;
+  justify-content: space-between;
+  background-color: rgb(7, 107, 165);
+  color: white;
+  @media screen and (min-width: variables.$mobile-nav-size) {
+    display: none;
+  }
 }

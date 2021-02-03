@@ -5,11 +5,14 @@ import styles from './headlines.module.scss';
 import { articles } from '../../../types/types';
 import Article from '../../article/article';
 import Toolbar from './toolbar';
-import { categoriesList, countryList, countryCode, categoryCode } from '../news-api-constants/constants';
+import {
+  categoriesList,
+  countryList,
+  countryCode,
+  categoryCode,
+} from '../news-api-constants/constants';
 
 interface Props {}
-
-
 
 const Headlines: React.FC<Props> = () => {
   const [countryFilter, setCountryFilter] = useState<string | undefined>(
@@ -34,15 +37,22 @@ const Headlines: React.FC<Props> = () => {
   const categoryFilterChangeHandler = (cat: string) => {
     setCategoryFilter(cat);
   };
+  const categorySelectChangeHandler = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    setCategoryFilter(event.target.value);
+  };
   const searchTermFilterChangeHandler = debounce((term: string) => {
     setSearchTermFilter(term);
   }, 300);
 
-  
   const getHeadlines = () => {
     const getDataFromServer = async () => {
       const categoryApi = categoryCode[categoriesList.indexOf(categoryFilter)];
-      const countryApi = countryFilter !== undefined ? countryCode[countryList.indexOf(countryFilter)] : '';
+      const countryApi =
+        countryFilter !== undefined
+          ? countryCode[countryList.indexOf(countryFilter)]
+          : '';
       try {
         const data = {
           country: countryApi,
@@ -80,13 +90,10 @@ const Headlines: React.FC<Props> = () => {
     searchTermFilter,
   ]);
 
-    let rtl = false;
-    if (
-      countryFilter === 'Israel' ||
-      countryFilter === 'Egypt'
-    ) {
-      rtl = true;
-    } 
+  let rtl = false;
+  if (countryFilter === 'Israel' || countryFilter === 'Egypt') {
+    rtl = true;
+  }
 
   const articleList = (
     <div className={styles.headlines}>
@@ -139,6 +146,7 @@ const Headlines: React.FC<Props> = () => {
         reloadData={getHeadlines}
         categoryFilter={categoryFilter}
         changeCategory={categoryFilterChangeHandler}
+        changeCategorySelect={categorySelectChangeHandler}
         categoriesList={categoriesList}
         countryList={countryList}
         changeCountry={countryFilterChangeHandler}
@@ -146,8 +154,7 @@ const Headlines: React.FC<Props> = () => {
         changeSearchTerm={searchTermFilterChangeHandler}
       />
       <h1 className={styles.heading}>
-        Headlines from{' '}
-        {!countryFilter ? 'All Countries' : countryFilter}
+        Headlines from {!countryFilter ? 'All Countries' : countryFilter}
       </h1>
       {articleDisplay()}
     </>

@@ -1,0 +1,29 @@
+.sidebar_open {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100vh;
+  background-color: rgb(7, 107, 165);
+  color: white;
+  z-index: 100;
+}
+
+.sidebar_closed {
+  display: none;
+}
+
+.toggler {
+  position: fixed;
+  top: 13px;
+  left: 0;
+  z-index: 200;
+}
+
+.toggler_closed {
+  display: none;
+}

@@ -60,8 +60,9 @@ const Everything: React.FC<Props> = () => {
           source: sourceFilter,
           searchTerm: searchTermFilter,
           searchInTitle: searchInTitle,
-          domains: domainsFilter?.toString(),
+          domains: domainsFilter?.join(','),
           language: languageCode[languageList.indexOf(language)],
+          sortBy: sortByFilter,
           pageSize: pageSize,
         };
         setIsLoading(true);

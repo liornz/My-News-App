@@ -23,23 +23,23 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   const searchInTitle: boolean = req.body.searchInTitle;
   const domains: string = req.body.domains || '';
   const excludeDomains: string = req.body.excludeDomains || '';
-  const toFrom: { from: string; to: string } = req.body.toFrom  || '';
+  const toFrom: { from: string; to: string } = req.body.toFrom || '';
   const language: language = req.body.language;
-  const sortBy: sortBy = req.body.sortBy || 'popularity';
+  const sortBy: sortBy = req.body.sortBy;
   const pageSize: number = req.body.pageSize;
 
   try {
     const everythingUrl = searchInTitle
       ? `
   https://newsapi.org/v2/everything?qInTitle=${encodeURI(
-          searchTerm
-        )}&language=${language}&pageSize=${pageSize}&apiKey=${
+    searchTerm
+  )}&language=${language}&sortBy=${sortBy}&pageSize=${pageSize}&apiKey=${
           process.env.NEWS_API
         }`
       : `
   https://newsapi.org/v2/everything?q=${encodeURI(
-          searchTerm
-        )}&language=${language}&pageSize=${pageSize}&apiKey=${
+    searchTerm
+  )}&language=${language}&sortBy=${sortBy}&pageSize=${pageSize}&apiKey=${
           process.env.NEWS_API
         }`;
     const response = await axios.get<everythingResponse>(everythingUrl);

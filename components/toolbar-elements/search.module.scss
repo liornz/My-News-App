@@ -1,3 +1,5 @@
+@use '../../styles/variables';
+
 .input {
     margin: 0 1rem;
     padding: 0 1rem;
@@ -7,5 +9,8 @@
     color: white;
     &:focus {
       outline: none;
+    }
+    @media (max-width: variables.$mobile-nav-size) {
+      width: 75%;
     }
   }
