@@ -2,6 +2,7 @@ import Search from '../../toolbar-elements/search';
 import Refresh from '../../toolbar-elements/refresh-button';
 import CountryFilter from '../../toolbar-elements/country-filter';
 import CategoryFilter from '../../toolbar-elements/category-filter';
+import Logo from '../../toolbar-elements/logo';
 import styles from './toolbar.module.scss';
 
 interface Props {
@@ -29,7 +30,7 @@ const Toolbar: React.FC<Props> = (props) => {
   return (
     <>
       <div className={styles.first_line}>
-        <div className={styles.logo}>Logo</div>
+        <Logo imageUrl={''} />
         <div className={styles.filter}>
           <CountryFilter
             countryFilter={countryFilter}

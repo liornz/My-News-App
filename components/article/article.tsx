@@ -8,10 +8,11 @@ interface Props {
   source: string;
   url: string;
   imageUrl: string | null | undefined;
+  rtl: boolean;
 }
 
 const Article: React.FC<Props> = (props) => {
-  const { id, title, description, source, url, imageUrl } = props;
+  const { id, title, description, source, url, imageUrl, rtl } = props;
 
   const image = () => {
     if (imageUrl === null || imageUrl === undefined) {
@@ -19,14 +20,21 @@ const Article: React.FC<Props> = (props) => {
     } else return <img src={imageUrl} alt="Article Image" />;
   };
 
+  const alignment = rtl === true ? 'right' : 'left';
+  const direction = rtl === true ? 'rtl' : 'ltr';
+
   const articleCard = (
     <div className={styles.article}>
       <a href={url}>
         {image()}
-        <h3>{title}</h3>
+        <h3 style={{ textAlign: alignment, direction: direction }}>{title}</h3>
       </a>
-      <p>Source: {source}</p>
-      <p>{description}</p>
+      <p>
+        Source: {source}
+      </p>
+      <p style={{ textAlign: alignment, direction: direction }}>
+        {description}
+      </p>
     </div>
   );
   const emptyCard = (

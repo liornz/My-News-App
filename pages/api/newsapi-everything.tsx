@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import axios from 'axios';
 import { articles, language, sortBy } from '../../types/types';
+import SearchInTitle from '../../components/toolbar-elements/search-in-title';
 
 interface ResponseOK {
   status: 'ok';
@@ -20,35 +21,25 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   const source: string = req.body.source || '';
   const searchTerm: string = req.body.searchTerm;
   const searchInTitle: boolean = req.body.searchInTitle;
-  const domains: string = req.body.domains;
-  const excludeDomains: string = req.body.excludeDomains;
-  const toFrom: { from: string; to: string } = req.body.toFrom;
+  const domains: string = req.body.domains || '';
+  const excludeDomains: string = req.body.excludeDomains || '';
+  const toFrom: { from: string; to: string } = req.body.toFrom  || '';
   const language: language = req.body.language;
-  const sortBy: sortBy = req.body.sortBy;
+  const sortBy: sortBy = req.body.sortBy || 'popularity';
   const pageSize: number = req.body.pageSize;
 
   try {
     const everythingUrl = searchInTitle
       ? `
-  https://newsapi.org/v2/everything?&source=${encodeURI(
-    source
-  )}&qInTitle=${encodeURI(
+  https://newsapi.org/v2/everything?qInTitle=${encodeURI(
           searchTerm
-        )}&domains=${domains}&excludeDomains=${excludeDomains}&from=${
-          toFrom.from
-        }&to=${
-          toFrom.to
-        }&language=${language}&sortBy=${sortBy}&pageSize=${pageSize}&apiKey=${
+        )}&language=${language}&pageSize=${pageSize}&apiKey=${
           process.env.NEWS_API
         }`
       : `
-  https://newsapi.org/v2/everything?&source=${encodeURI(source)}&q=${encodeURI(
+  https://newsapi.org/v2/everything?q=${encodeURI(
           searchTerm
-        )}&domains=${domains}&excludeDomains=${excludeDomains}&from=${
-          toFrom.from
-        }&to=${
-          toFrom.to
-        }&language=${language}&sortBy=${sortBy}&pageSize=${pageSize}&apiKey=${
+        )}&language=${language}&pageSize=${pageSize}&apiKey=${
           process.env.NEWS_API
         }`;
     const response = await axios.get<everythingResponse>(everythingUrl);

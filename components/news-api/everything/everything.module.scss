@@ -1,0 +1,26 @@
+.heading {
+  margin: 0;
+  padding-top: 8rem;
+  text-align: center;
+  background-color: rgb(235, 235, 235);
+  @media (min-width: 900px) {
+    padding-top: 2rem;
+  }
+}
+
+.headlines {
+  padding: 2rem;
+  display: grid;
+  justify-content: center;
+  grid-template-columns: repeat(auto-fit, 22rem);
+  grid-auto-rows: fit-content;
+  gap: 2rem;
+  background-color:rgb(235, 235, 235);
+}
+
+.epmty_headlines {
+  display: flex;
+  height: 60vh;
+  justify-content: center;
+  align-items: center;
+}

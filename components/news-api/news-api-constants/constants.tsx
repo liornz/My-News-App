@@ -131,3 +131,35 @@ export const countryCode = [
   'us',
   've',
 ];
+
+export const languageList = [
+  'Arabic',
+  'German',
+  'English',
+  'Spanish',
+  'French',
+  'Hebrew',
+  'Italian',
+  'Dutch',
+  'Norwegian',
+  'Portuguese',
+  'Russian',
+  'Chinese',
+];
+
+export const languageCode = [
+  'ar',
+  'de',
+  'en',
+  'es',
+  'fr',
+  'he',
+  'it',
+  'nl',
+  'no',
+  'pt',
+  'ru',
+  'zh'
+];
+
+
