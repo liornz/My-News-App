@@ -30,12 +30,19 @@ const Sidebar: React.FC<Props> = (props) => {
     toggle
   } = props;
 
+  const sidebarClassName = [styles.sidebar];
+  if (show) {
+    sidebarClassName.push(styles.sidebar_opened);
+  } else {
+    sidebarClassName.push(styles.sidebar_closed);
+  }
+
   return (
     <>
       <div className={show ? styles.toggler : styles.toggler_closed}>
         <MenuToggler toggle={toggle} show={show} />
       </div>
-      <div className={show ? styles.sidebar_open : styles.sidebar_closed}>
+      <div className={sidebarClassName.join(' ')}>
         <Logo imageUrl={''} />
         <CountryFilter
           countryList={countryList}

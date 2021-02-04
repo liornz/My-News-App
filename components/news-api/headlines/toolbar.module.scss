@@ -17,10 +17,18 @@
   display: none;
   @media screen and (min-width: variables.$mobile-nav-size) {
     display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
   }
 }
 
 .mobile {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
   padding: 1rem 0;
   display: flex;
   justify-content: space-between;
