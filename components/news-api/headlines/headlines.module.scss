@@ -1,8 +1,13 @@
+@use '../../../styles/variables';
+
 .heading {
   margin: 0;
-  padding-top: 2rem;
+  padding-top: 6rem;
   text-align: center;
   background-color: rgb(235, 235, 235);
+  @media screen and (min-width: variables.$mobile-nav-size){
+    padding-top: 8rem;
+  }
 }
 
 .headlines {

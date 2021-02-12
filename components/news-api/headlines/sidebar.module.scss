@@ -1,3 +1,5 @@
+@use '../../../styles/variables';
+
 .sidebar {
   display: flex;
   flex-direction: column;
@@ -8,7 +10,7 @@
   left: 0;
   width: 50%;
   height: 100vh;
-  background-color: rgb(7, 107, 165);
+  background-color: variables.$main-color;
   color: white;
   z-index: 100;
   transition: all 0.3s ease-out;
@@ -26,7 +28,7 @@
 
 .toggler {
   position: fixed;
-  top: 13px;
+  top: 15px;
   left: 0;
   z-index: 200;
 }

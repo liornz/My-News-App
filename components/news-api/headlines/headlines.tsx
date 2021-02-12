@@ -73,7 +73,9 @@ const Headlines: React.FC<Props> = () => {
         if (res.status === 200) {
           setArticleArray(res.data);
           setIsLoading(false);
-          console.log('NEWS API DATA', res.data);
+          // console.log('NEWS API DATA', res.data);
+        } else {
+          alert(`Error code ${res.data.code} - Message: ${res.data.message}`);
         }
       } catch (error) {
         console.log('Error retrieving news data from server!');
@@ -88,6 +90,7 @@ const Headlines: React.FC<Props> = () => {
     categoryFilter,
     sourceFilter,
     searchTermFilter,
+    pageSize,
   ]);
 
   let rtl = false;

@@ -30,7 +30,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   )}&category=${encodeURI(category)}&source=${encodeURI(source)}&q=${encodeURI(
       searchTerm
     )}&pageSize=${pageSize}&apiKey=${process.env.NEWS_API}`;
-    // console.log(headlinesUrl);
     const response = await axios.get<headlinesResponse>(headlinesUrl);
     if (response.data.status === 'ok') {
       res.status(200).send(response.data.articles);
@@ -40,7 +39,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         .send({ code: response.data.code, message: response.data.message });
     }
   } catch (error) {
-    res.status(402);
+    res.status(402).send({ message: 'Network Error!' });
   }
 };
 
